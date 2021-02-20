@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  mongo_ns:
+    container_name: mongo_ns
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - /opt/docker/nightscout/mongo_ns:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=pass
+      - MONGO_INITDB_DATABASE=nsdb
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  nightscout:
+    container_name: nightscout
+    image: dhermanns/rpi-nightscout:latest
+    restart: always
+    ports:
+      - 1337:1337
+    links: 
+      - mongo_ns
+    depends_on:
+      - mongo_ns
+    environment:
+      - API_SECRET=1234567890qwerty
+      - MONGODB_URI=mongodb://uzytkownikbazy:haslouzytkownika@mongo_ns/nsdb
+      - INSECURE_USE_HTTP=true
+      - DEVICESTATUS_ADVANCED=true
+      - ENABLE=careportal rawbg iob bridge cob bwp cage sage bage iage basal pushover treatmentnotify pump maker speech cors alexa openaps
+      - AUTH_DEFAULT_ROLES=readable devicestatus-upload
+      - ALARM_HIGH=off
+      - ALARM_LOW=off
+      - ALARM_TIMEAGO_URGENT=off
+      - ALARM_TIMEAGO_URGENT_MINS=30
+      - ALARM_TIMEAGO_WARN=off
+      - ALARM_TIMEAGO_WARN_MINS=15
+      - ALARM_TYPES=simple
+      - ALARM_URGENT_HIGH=off
+      - ALARM_URGENT_LOW=off
+      - BASAL_RENDER=default
+      - BG_HIGH=250
+      - BG_LOW_50
+      - BG_TARGET_BOTTOM=70
+      - BG_TARGET_TOP=140
+      - CUSTOM_TITTLE=CGMsite
+      - DISPLAY_UNITS=mg/dl
+      - NIGHT_MODE=on
+      - SHOW_CLOCK_DELTA=true
+      - SHOW_CLOCK_LAST_TIME=true
+      - SHOW_FORECAST=openaps
+      - SHOW_PLUGINS=careportal openaps pump iob sage cage
+      - SHOW_RAWBG=never
+      - THEME=colors
+      - TIME_FORMAT=24
+
+
