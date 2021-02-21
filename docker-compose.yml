@@ -5,13 +5,9 @@ services:
     container_name: mongo_ns
     image: mongo:latest
     restart: always
-    ports:
-      - 27017:27017
     volumes:
-      - /opt/docker/nightscout/mongo_ns:/data/db
+      - /opt/docker/containers-files/nightscout_mongodb:/data/db
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=user
-      - MONGO_INITDB_ROOT_PASSWORD=pass
       - MONGO_INITDB_DATABASE=nsdb
     volumes:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
@@ -27,7 +23,7 @@ services:
     depends_on:
       - mongo_ns
     environment:
-      - API_SECRET=1234567890qwerty
+      - API_SECRET=secretapikeytochange2021
       - MONGODB_URI=mongodb://uzytkownikbazy:haslouzytkownika@mongo_ns/nsdb
       - INSECURE_USE_HTTP=true
       - DEVICESTATUS_ADVANCED=true
@@ -57,5 +53,7 @@ services:
       - SHOW_RAWBG=never
       - THEME=colors
       - TIME_FORMAT=24
-
+    volumes:
+      - ./nightscout.sh:/home/node/app/nightscout.sh
+    command: /home/node/app/nightscout.sh
 
