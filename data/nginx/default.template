@@ -1,0 +1,39 @@
+server {
+    listen 80;
+    server_name ${NS_HOST};
+    server_tokens off;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl;
+
+    server_name ${NS_HOST};
+    server_tokens off;
+
+    ssl_certificate /etc/letsencrypt/live/${NS_HOST}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${NS_HOST}/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+
+    location / {
+        proxy_pass          http://nightscout:1337;
+        proxy_set_header    X-Forwarded-Host   $host; 
+        proxy_set_header    X-Forwarded-Server $host; 
+        proxy_set_header    X-Forwarded-For    $proxy_add_x_forwarded_for; 
+        proxy_set_header    X-Forwarded-Proto  $scheme; 
+        proxy_set_header    X-Real-IP          $remote_addr; 
+        proxy_set_header    Host               $host;
+
+
+    }
+}
