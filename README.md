@@ -19,7 +19,9 @@ This project allow you to run Nightscout on RPi4
 ## Thanks to
 
 Nightscout Team [https://github.com/nightscout/cgm-remote-monitor](https://github.com/nightscout/cgm-remote-monitor)
+
 Ireneusz Ptak (Certbot and installscript - it saved me a lot of time) [https://github.com/ireneusz-ptak/ns-docker](https://github.com/ireneusz-ptak/ns-docker)
+
 Certificate installation thanks to [https://github.com/wmnnd/nginx-certbot](https://github.com/wmnnd/nginx-certbot)
 
 ## Licence
