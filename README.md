@@ -7,13 +7,14 @@ This project allow you to run Nightscout on RPi4
 * RPI 4
 * Installed: git, docker, docker-compose
 * Access to router with port forwarding
+* Public IP address with registred domain (e.g. DynDNS)
 
 ## Step-by-step instalation
 
-* clon repository `git clone https://github.com/walczakkamil/pi_nightscout.git .`
-* prepare your router, forward external ports for http and https (e.g. 80->rpi_ip:80, 443->rpi_ip:443)
-* make environment configuration file `cp .env.template .env`
-* look to docker-compose.yaml and setup Nightscout configuration
+* Clon repository `git clone https://github.com/walczakkamil/pi_nightscout.git .`
+* Prepare your router, forward external ports for http and https (e.g. 80->rpi_ip:80, 443->rpi_ip:443)
+* Make environment configuration file `cp .env.template .env`
+* Look to .env and setup Nightscout/domain configuration
 * run `install.sh` script
 
 ## Thanks to
