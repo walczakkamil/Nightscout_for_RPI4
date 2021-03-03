@@ -7,6 +7,11 @@ fi
 
 source .env
 
+echo "### Pull or Build Docker image"
+if ! docker pull waperr/nightscout-rpi:${NS_RELEASE}; then
+    docker build -t waperr/nightscout-rpi:${NS_RELEASE} .
+fi
+
 domains=($NS_HOST)
 rsa_key_size=4096
 data_path="./data/certbot"
