@@ -19,7 +19,7 @@ ENV HOME /home/node
 WORKDIR /home/node/app
 
 # install the application
-RUN git clone --depth 1 --branch 14.2.2 https://github.com/nightscout/cgm-remote-monitor.git . && \
+RUN git clone --depth 1 --branch ${NS_RELEASE} https://github.com/nightscout/cgm-remote-monitor.git . && \
     npm install
 
 EXPOSE 1337
