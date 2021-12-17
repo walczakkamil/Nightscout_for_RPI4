@@ -1,7 +1,7 @@
-
 FROM node:12-buster
 MAINTAINER Kamil Walczak <waperr@interia.pl>
 
+ARG version
 
 RUN apt-get update && \
     apt-get upgrade -y
@@ -19,7 +19,7 @@ ENV HOME /home/node
 WORKDIR /home/node/app
 
 # install the application
-RUN git clone --depth 1 --branch master https://github.com/nightscout/cgm-remote-monitor.git . && \
+RUN git clone --depth 1 --branch ${version} https://github.com/nightscout/cgm-remote-monitor.git . && \
     npm install
 
 EXPOSE 1337
