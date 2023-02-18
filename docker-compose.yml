@@ -9,7 +9,7 @@ services:
 
   mongo_ns:
     container_name: mongo_ns
-    image: mongo:latest
+    image: mongo:4.4.18
     restart: always
     environment:
       - MONGO_INITDB_DATABASE=nsdb
